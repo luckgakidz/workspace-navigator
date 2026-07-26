@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Main folder shape -->
+  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+  <!-- Grid/workspace indicator inside folder -->
+  <rect x="7" y="11" width="4" height="4" rx="0.5"/>
+  <rect x="13" y="11" width="4" height="4" rx="0.5"/>
+</svg>

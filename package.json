@@ -1,0 +1,201 @@
+{
+  "name": "workspace-navigator",
+  "displayName": "Workspace Navigator",
+  "description": "Visual Studio Code extension that lets you switch between workspaces in seconds",
+  "version": "0.0.1",
+  "publisher": "luckgakidz",
+  "author": "luckgakidz",
+  "license": "MIT",
+  "icon": "resources/icon.png",
+  "galleryBanner": {
+    "color": "#1F6FEB",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luckgakidz/workspace-navigator.git"
+  },
+  "homepage": "https://github.com/luckgakidz/workspace-navigator#readme",
+  "bugs": {
+    "url": "https://github.com/luckgakidz/workspace-navigator/issues"
+  },
+  "keywords": [
+    "workspace",
+    "workspace switcher",
+    "tree view",
+    "productivity"
+  ],
+  "engines": {
+    "vscode": "^1.109.0",
+    "node": ">=22"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "workspace-manager",
+          "title": "Workspace Manager",
+          "icon": "resources/workspace-manager.svg"
+        }
+      ]
+    },
+    "views": {
+      "workspace-manager": [
+        {
+          "id": "workspaceManagerView",
+          "name": "Workspaces",
+          "icon": "resources/workspace-manager.svg",
+          "contextualTitle": "Workspace Manager"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "workspaceManagerView",
+        "contents": "スキャンフォルダーが設定されていません。\n[スキャンフォルダーを追加](command:workspaceManager.addScanFolder)\n[設定を開く](command:workspaceManager.openSettings)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "workspaceManager.openWorkspace",
+        "title": "ワークスペースを開く",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "workspaceManager.openWorkspaceInNewWindow",
+        "title": "新しいウィンドウでワークスペースを開く",
+        "icon": "$(window)"
+      },
+      {
+        "command": "workspaceManager.refresh",
+        "title": "更新",
+        "icon": "$(refresh)",
+        "category": "Workspace Manager"
+      },
+      {
+        "command": "workspaceManager.revealCurrentWorkspace",
+        "title": "現在のワークスペースを表示",
+        "icon": "$(target)",
+        "category": "Workspace Manager"
+      },
+      {
+        "command": "workspaceManager.expandAll",
+        "title": "すべて開く",
+        "icon": "$(expand-all)",
+        "category": "Workspace Manager"
+      },
+      {
+        "command": "workspaceManager.addScanFolder",
+        "title": "スキャンフォルダーを追加",
+        "icon": "$(add)",
+        "category": "Workspace Manager"
+      },
+      {
+        "command": "workspaceManager.removeScanFolder",
+        "title": "スキャンフォルダーを削除",
+        "icon": "$(trash)",
+        "category": "Workspace Manager"
+      },
+      {
+        "command": "workspaceManager.openSettings",
+        "title": "設定を開く",
+        "icon": "$(settings-gear)",
+        "category": "Workspace Manager"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "workspaceManager.refresh",
+          "when": "view == workspaceManagerView",
+          "group": "navigation@1"
+        },
+        {
+          "command": "workspaceManager.revealCurrentWorkspace",
+          "when": "view == workspaceManagerView",
+          "group": "navigation@2"
+        },
+        {
+          "command": "workspaceManager.addScanFolder",
+          "when": "view == workspaceManagerView",
+          "group": "navigation@3"
+        },
+        {
+          "command": "workspaceManager.expandAll",
+          "when": "view == workspaceManagerView",
+          "group": "navigation@4"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "workspaceManager.removeScanFolder",
+          "when": "view == workspaceManagerView && viewItem == scanFolder",
+          "group": "navigation@1"
+        },
+        {
+          "command": "workspaceManager.openWorkspaceInNewWindow",
+          "when": "view == workspaceManagerView && viewItem == workspace",
+          "group": "inline@1"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Workspace Manager",
+      "properties": {
+        "workspaceManager.scanFolders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "List of folder paths to scan for .code-workspace files."
+        },
+        "workspaceManager.excludePatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/node_modules",
+            "**/.git",
+            "**/.vscode"
+          ],
+          "description": "Glob patterns to exclude from scanning."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "packageManager": "pnpm@10.30.1",
+  "devDependencies": {
+    "@types/minimatch": "^5.1.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.106.1",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "3.9.2",
+    "eslint": "^9.39.1",
+    "minimatch": "^10.1.1",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.3",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1"
+  }
+}
